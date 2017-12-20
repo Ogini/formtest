@@ -7,7 +7,7 @@ const formInput = (props) =>  {
             <ControlLabel>{props.label}</ControlLabel>
             <FormControl type={props.type}
                          value={props.value}
-                         placeholder={props.placeHolder}
+                         placeholder={props.placeholder}
                          onChange={props.changeHandler}
                          />
             <FormControl.Feedback/>

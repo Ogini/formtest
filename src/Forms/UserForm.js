@@ -1,10 +1,10 @@
-import React from 'react'
+import React, {Component} from 'react'
 import {Form, Grid, Row, Col, Button} from 'react-bootstrap'
 import FormInput from './Components/FormInput'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { validate } from './Validation'
 
-class UserForm extends React.Component {
+class UserForm extends Component {
     constructor(props) {
         super(props)
         const initState = {}
@@ -62,7 +62,7 @@ class UserForm extends React.Component {
                             <Col lg={4} lgOffset={4}>
                                 <Form>
                                     <FormInput label={p.label} value={this.state[p.id]}
-                                               placeHolder={p.placeholder} id={p.id}
+                                               placeholder={p.placeholder} id={p.id}
                                                type={p.type === 'number' ? 'text' : p.type}
                                                validationState={this.getValidationState(p.validation, p.id)}
                                                changeHandler={this.changeHandler}/>

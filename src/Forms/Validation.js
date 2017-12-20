@@ -1,19 +1,11 @@
 const validateByMinLength = (length, value) => {
     length = parseInt(length, 10)
-    if (value.length >= length) {
-        return true
-    }
-
-    return false
+    return value.length >= length;
 }
 
 const validateByMaxLength = (length, value) => {
     length = parseInt(length, 10)
-    if (value.length <= length) {
-        return true
-    }
-
-    return false
+    return value.length <= length;
 }
 
 const validatePassword = (config, value) => {
@@ -21,8 +13,7 @@ const validatePassword = (config, value) => {
 }
 
 const validateNumber = (config, value) => {
-    if (typeof value === 'number' && value <= Number.MAX_SAFE_INTEGER && value >= Number.MIN_SAFE_INTEGER) return true
-    return false
+    return typeof value === 'number' && value <= Number.MAX_SAFE_INTEGER && value >= Number.MIN_SAFE_INTEGER
 }
 
 export const validate = (validations, value) => {
