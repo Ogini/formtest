@@ -7,7 +7,7 @@ class DynamicForm extends Component {
         const initState = {}
         const {fields} = props
         for (const e of fields) {
-            initState[e.id] = ''
+            initState[e.id] = e.default || ''
         }
         this.state = initState
         this.changeHandler = this.changeHandler.bind(this)
@@ -16,6 +16,8 @@ class DynamicForm extends Component {
     }
 
     getValidationState(validation, field) {
+        validation = validation || []
+        if (validation.length === 0) return 'success'
         return validate(validation, this.state[field]) ? 'success' : 'error'
     }
 
@@ -23,7 +25,8 @@ class DynamicForm extends Component {
         let valid = true
         const {fields} = this.props
         for (const e of fields) {
-            if (!validate(e.validation, this.state[e.id])) {
+            const evaluate = e.validation || []
+            if (evaluate.length > 0 && !validate(evaluate, this.state[e.id])) {
                 valid = false;
             }
         }
@@ -32,7 +35,7 @@ class DynamicForm extends Component {
     }
 
     changeHandler(event) {
-        const value = event.target.value
+        let value = event.target.value
         const {fields} = this.props
         const field = fields.find(a => a.id === event.target.id)
         const newState = {}
@@ -40,6 +43,7 @@ class DynamicForm extends Component {
         switch (subtype) {
             case 'text':
             case 'password':
+            case 'select':
                 newState[field.id] = value
                 this.setState(newState)
                 break
@@ -53,6 +57,13 @@ class DynamicForm extends Component {
                 } else if (newState[field.id] <= Number.MAX_SAFE_INTEGER && newState[field.id] >= Number.MIN_SAFE_INTEGER) {
                     this.setState(newState)
                 }
+                break
+            case 'checkbox':
+                if (!event.target.checked) {
+                    value = ''
+                }
+                newState[field.id] = value
+                this.setState(newState)
                 break
             default:
         }
