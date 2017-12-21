@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import './App.css'
 import UserForm from './Forms/UserForm'
 
 const fields = [
@@ -28,7 +27,8 @@ const fields = [
     {
         id: 'number',
         label: 'Number',
-        type: 'number',
+        type: 'text',
+        subtype: 'number',
         placeholder: 'Enter a number',
         validation: ['number']
     }

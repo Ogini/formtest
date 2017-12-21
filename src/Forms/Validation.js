@@ -1,21 +1,55 @@
-const validateByMinLength = (length, value) => {
+/**
+ * Validate By Minimum String Length
+ *
+ * @param value
+ * @param length
+ * @returns {boolean}
+ */
+const validateByMinLength = (value, length) => {
     length = parseInt(length, 10)
-    return value.length >= length;
+    return value.length >= length
 }
 
-const validateByMaxLength = (length, value) => {
+/**
+ * Validate by Maximum String Length
+ *
+ * @param value
+ * @param length
+ * @returns {boolean}
+ */
+const validateByMaxLength = (value, length) => {
     length = parseInt(length, 10)
-    return value.length <= length;
+    return value.length <= length
 }
 
-const validatePassword = (config, value) => {
+/**
+ * Validate Password
+ *
+ * @param value
+ * @param config
+ * @returns {boolean}
+ */
+const validatePassword = (value, config) => {
     return true
 }
 
-const validateNumber = (config, value) => {
+/**
+ * Validate as Number
+ *
+ * @param value
+ * @param config
+ * @returns {boolean}
+ */
+const validateNumber = (value, config) => {
     return typeof value === 'number' && value <= Number.MAX_SAFE_INTEGER && value >= Number.MIN_SAFE_INTEGER
 }
 
+/**
+ * Validate Value using Validations
+ * @param validations
+ * @param value
+ * @returns {boolean}
+ */
 export const validate = (validations, value) => {
     let valid = true
 
@@ -24,25 +58,26 @@ export const validate = (validations, value) => {
         let validation = config.shift()
         switch (validation) {
             case 'minlength':
-                if (!validateByMinLength(config[0], value)) {
-                    valid = false;
+                if (!validateByMinLength(value, config[0])) {
+                    valid = false
                 }
                 break
             case 'maxlength':
-                if (!validateByMaxLength(config[0], value)) {
-                    valid = false;
+                if (!validateByMaxLength(value, config[0])) {
+                    valid = false
                 }
                 break
             case 'password':
-                if (!validatePassword(config, value)) {
-                    valid = false;
+                if (!validatePassword(value, config)) {
+                    valid = false
                 }
                 break
             case 'number':
-                if (!validateNumber(config, value)) {
-                    valid = false;
+                if (!validateNumber(value, config)) {
+                    valid = false
                 }
                 break
+            // Fail unknown validations
             default:
                 valid = false
         }
