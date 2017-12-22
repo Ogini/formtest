@@ -1,5 +1,9 @@
-import { Component } from 'react'
+import React, { Component } from 'react'
 import {validate} from './Validation'
+import FormInput from './Components/FormInput'
+import FormSelect from './Components/FormSelect'
+import FormCheckbox from './Components/FormCheckbox'
+import PropTypes from 'prop-types'
 
 class DynamicForm extends Component {
     constructor(props) {
@@ -13,6 +17,37 @@ class DynamicForm extends Component {
         this.changeHandler = this.changeHandler.bind(this)
         this.getValidationState = this.getValidationState.bind(this)
         this.isFormValid = this.isFormValid.bind(this)
+        this.outputField = this.outputField.bind(this)
+    }
+
+    outputField(p) {
+        switch (p.type) {
+            case 'text':
+            case 'password':
+                return (
+                    <FormInput label={p.label} value={this.state[p.id]}
+                               placeholder={p.placeholder} id={p.id}
+                               type={p.type}
+                               validationState={this.getValidationState(p.validation, p.id)}
+                               changeHandler={this.changeHandler}/>
+                )
+            case 'select':
+                return (
+                    <FormSelect label={p.label} value={this.state[p.id]}
+                                placeholder={p.placeholder} id={p.id}
+                                type={p.type} options={p.options}
+                                validationState={this.getValidationState(p.validation, p.id)}
+                                changeHandler={this.changeHandler}/>
+                )
+            case 'checkbox':
+                return (
+                    <FormCheckbox label={p.label} value={this.state[p.id]} id={p.id}
+                                  validationState={this.getValidationState(p.validation, p.id)}
+                                  changeHandler={this.changeHandler}/>
+                )
+            default:
+                return null
+        }
     }
 
     getValidationState(validation, field) {
@@ -68,6 +103,23 @@ class DynamicForm extends Component {
             default:
         }
     }
+
+
 }
+
+DynamicForm.propTypes = {
+    fields: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.string.isRequired,
+            label: PropTypes.string,
+            placeholder: PropTypes.string,
+            type: PropTypes.string.isRequired,
+            subtype: PropTypes.string,
+            validation: PropTypes.arrayOf(PropTypes.string),
+            options: PropTypes.arrayOf(PropTypes.object)
+        })
+    )
+}
+
 
 export default DynamicForm

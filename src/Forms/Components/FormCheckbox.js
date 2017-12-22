@@ -1,4 +1,6 @@
 import React from 'react'
+// noinspection NpmUsedModulesInstalled
+import PropTypes from 'prop-types'
 import {FormGroup, FormControl, Checkbox} from 'react-bootstrap'
 
 const formCheckbox = (props) =>  {
@@ -10,6 +12,13 @@ const formCheckbox = (props) =>  {
             <FormControl.Feedback/>
         </FormGroup>
     )
+}
+
+formCheckbox.propTypes = {
+    validationState: PropTypes.string.isRequired,
+    changeHandler: PropTypes.func.isRequired,
+    id: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired
 }
 
 export default formCheckbox

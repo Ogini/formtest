@@ -1,10 +1,11 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {FormGroup, FormControl, ControlLabel} from 'react-bootstrap'
 
 const formSelect = (props) =>  {
     return (
         <FormGroup controlId={props.id} validationState={props.validationState}>
-            <ControlLabel>{props.label}</ControlLabel>
+            {props.label ? <ControlLabel>{props.label}</ControlLabel> : null}
             <FormControl type={props.type}
                          componentClass='select'
                          value={props.value}
@@ -16,6 +17,17 @@ const formSelect = (props) =>  {
             <FormControl.Feedback/>
         </FormGroup>
     )
+}
+
+formSelect.propTypes = {
+    validationState: PropTypes.string.isRequired,
+    changeHandler: PropTypes.func.isRequired,
+    id: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    options: PropTypes.arrayOf(PropTypes.object.isRequired),
+    value: PropTypes.string,
+    placeholder: PropTypes.string,
+    label: PropTypes.string
 }
 
 export default formSelect
